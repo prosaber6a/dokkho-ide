@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dokkho HTML Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-builds@1.22.0/css/ace.min.css">
+    <style type="text/css" media="screen">
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        h1, p {
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        #ide {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+        }
+
+        #editor {
+            font-size: large;
+        }
+
+        #render {
+            padding: 1%;
+            width: 98%;
+            height: 96%;
+            position: relative;
+        }
+
+        #preview {
+            width: 99%;
+            height: 99%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dokkho HTML Editor</h1>
+    <p><a href="#">www.dokkho.xyz</a></p>
+    <hr>
+    <div id="ide">
+        <div id="editor"></div>
+        <div id="render">
+            <iframe id="preview"></iframe>
+        </div>
+    </div>
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.22.0/src-min-noconflict/ace.min.js"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/html");
+
+
+        // Get a reference to the iframe
+        var preview = document.getElementById("preview").contentWindow.document;
+
+        // Function to update the iframe with the HTML code
+        function updatePreview() {
+            var code = editor.getValue();
+            preview.open();
+            preview.write(code);
+            preview.close();
+        }
+
+        // Update the preview whenever the editor content changes
+        editor.getSession().on('change', updatePreview);
+
+        // Initial rendering
+        updatePreview();
+
+    </script>
+</body>
+
+</html>
